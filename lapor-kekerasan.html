@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,10 +7,9 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      line-height: 1.6;
+      background-color: rgb(255, 182, 193);
       margin: 0;
       padding: 0;
-      background-color: rgb(255, 182, 193);
     }
     .container {
       max-width: 600px;
@@ -36,7 +35,7 @@
     }
     button {
       background-color: #007BFF;
-      color: #fff;
+      color: white;
       border: none;
       cursor: pointer;
     }
@@ -51,26 +50,25 @@
     <p>Wali Kelas: Any Hastuti S. Pd</p>
     <p>Ketua Kelas: Nandira Almalieka</p>
 
-    <form id="pengaduanForm">
-      <label for="jenis-pelaporan">Jenis Pelaporan</label>
-      <select id="jenis-pelaporan" name="jenis-pelaporan" required>
+    <form id="laporanForm">
+      <label for="jenisLaporan">Jenis Pelaporan</label>
+      <select id="jenisLaporan" name="jenisLaporan" required>
         <option value="">-- Pilih Kategori --</option>
-        <option value="keamanan">Kekerasan</option>
+        <option value="Kekerasan">Kekerasan</option>
       </select>
 
-      <label for="Pelapor">Pelapor</label>
-      <select id="Pelapor" name="Pelapor" required>
+      <label for="pelapor">Pelapor</label>
+      <select id="pelapor" name="pelapor" required>
         <option value="">-- Pilih Kategori --</option>
         <option value="Saksi">Saksi</option>
         <option value="Korban">Korban</option>
       </select>
 
-      <label for="waktu-kejadian">Waktu Kejadian (Opsional)</label>
-      <input type="date" id="tanggal-kejadian" name="tanggal-kejadian" required>
-      <input type="time" id="waktu-kejadian" name="waktu-kejadian">
+      <label for="waktuKejadian">Waktu Kejadian (Opsional)</label>
+      <input type="datetime-local" id="waktuKejadian" name="waktuKejadian">
 
-      <label for="lokasi-kejadian">Lokasi Kejadian</label>
-      <select id="lokasi-kejadian" name="lokasi-kejadian">
+      <label for="lokasiKejadian">Lokasi Kejadian</label>
+      <select id="lokasiKejadian" name="lokasiKejadian">
         <option value="">-- Pilih Lokasi Kejadian --</option>
         <option value="Masjid">Masjid</option>
         <option value="Lapangan">Lapangan</option>
@@ -82,15 +80,7 @@
       <label for="deskripsi">Deskripsi Tambahan</label>
       <textarea id="deskripsi" name="deskripsi" rows="5" placeholder="Jelaskan secara rinci alur dari kasus yang Anda laporkan" required></textarea>
 
-      <label for="bukti">Upload Bukti Pendukung</label>
-      <input type="file" id="bukti" name="bukti" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.mp3,.mp4,.ppt,.pptx" multiple>
-      <div id="preview-container" style="margin-top: 10px;"></div>
-
-      <p><strong>Kontak Pelapor (Opsional)</strong></p>
-      <label for="nama">Nama</label>
-      <input type="text" id="nama" name="nama" placeholder="Nama Anda">
-
-      <label for="kontak">Nomor Telepon/Email</label>
+      <label for="kontak">Kontak Pelapor (Opsional)</label>
       <input type="text" id="kontak" name="kontak" placeholder="Nomor telepon atau email Anda">
 
       <button type="submit">Kirim Laporan</button>
@@ -98,32 +88,32 @@
   </div>
 
   <script>
-    document.getElementById("pengaduanForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+    document.getElementById("laporanForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Mencegah reload
 
       const formData = {
-        jenis_pelaporan: document.getElementById("jenis-pelaporan").value,
-        pelapor: document.getElementById("Pelapor").value,
-        waktu_kejadian: document.getElementById("tanggal-kejadian").value + " " + document.getElementById("waktu-kejadian").value,
-        lokasi_kejadian: document.getElementById("lokasi-kejadian").value,
+        jenisPelaporan: document.getElementById("jenisPelaporan").value,
+        pelapor: document.getElementById("pelapor").value,
+        waktuKejadian: document.getElementById("waktuKejadian").value,
+        lokasiKejadian: document.getElementById("lokasiKejadian").value,
         deskripsi: document.getElementById("deskripsi").value,
-        kontak: document.getElementById("kontak").value || "-"
+        kontak: document.getElementById("kontak").value,
       };
 
       fetch("https://script.google.com/macros/s/AKfycbz-rJswYHzyVYeh_4dJ9mS2FkZdFW3eGWE0Sb6vWjA/dev", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         }
       })
-      .then(response => response.text())
-      .then(result => {
-        alert("✅ Laporan berhasil dikirim!");
-        document.getElementById("pengaduanForm").reset();
+      .then(response => response.json())
+      .then(data => {
+        alert("✅ " + data.message);
+        document.getElementById("laporanForm").reset();
       })
       .catch(error => {
-        console.error("❌ Gagal mengirim:", error);
+        console.error("Error:", error);
         alert("❌ Terjadi kesalahan saat mengirim laporan.");
       });
     });

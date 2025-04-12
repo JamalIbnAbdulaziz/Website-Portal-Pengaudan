@@ -64,8 +64,11 @@
         <option value="Korban">Korban</option>
       </select>
 
-      <label for="waktuKejadian">Waktu Kejadian (Opsional)</label>
-      <input type="datetime-local" id="waktuKejadian" name="waktuKejadian">
+      <label for="tanggalKejadian">Tanggal Kejadian</label>
+      <input type="date" id="tanggalKejadian" name="tanggalKejadian">
+
+      <label for="jamKejadian">Jam Kejadian</label>
+      <input type="time" id="jamKejadian" name="jamKejadian">
 
       <label for="lokasiKejadian">Lokasi Kejadian</label>
       <select id="lokasiKejadian" name="lokasiKejadian">
@@ -80,7 +83,14 @@
       <label for="deskripsi">Deskripsi Tambahan</label>
       <textarea id="deskripsi" name="deskripsi" rows="5" placeholder="Jelaskan secara rinci alur dari kasus yang Anda laporkan" required></textarea>
 
-      <label for="kontak">Kontak Pelapor (Opsional)</label>
+      <label for="bukti">Upload Bukti Pendukung</label>
+      <input type="file" id="bukti" name="bukti" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.mp3,.mp4,.ppt,.pptx" multiple>
+
+      <p><strong>Kontak Pelapor (Opsional)</strong></p>
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" name="nama" placeholder="Nama Anda">
+
+      <label for="kontak">Nomor Telepon/Email</label>
       <input type="text" id="kontak" name="kontak" placeholder="Nomor telepon atau email Anda">
 
       <button type="submit">Kirim Laporan</button>
@@ -89,15 +99,21 @@
 
   <script>
     document.getElementById("laporanForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Mencegah reload
+      event.preventDefault();
+
+      // Gabungkan tanggal & jam menjadi satu string waktu kejadian
+      const tanggal = document.getElementById("tanggalKejadian").value;
+      const jam = document.getElementById("jamKejadian").value;
+      const waktuKejadian = tanggal && jam ? `${tanggal} ${jam}` : "";
 
       const formData = {
-        jenisPelaporan: document.getElementById("jenisPelaporan").value,
+        jenisLaporan: document.getElementById("jenisLaporan").value,
         pelapor: document.getElementById("pelapor").value,
-        waktuKejadian: document.getElementById("waktuKejadian").value,
+        waktuKejadian: waktuKejadian,
         lokasiKejadian: document.getElementById("lokasiKejadian").value,
         deskripsi: document.getElementById("deskripsi").value,
         kontak: document.getElementById("kontak").value,
+        nama: document.getElementById("nama").value,
       };
 
       fetch("https://script.google.com/macros/s/AKfycbz-rJswYHzyVYeh_4dJ9mS2FkZdFW3eGWE0Sb6vWjA/dev", {

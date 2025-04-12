@@ -103,17 +103,16 @@
       const waktuGabungan = document.getElementById("tanggalKejadian").value + " " + document.getElementById("jamKejadian").value;
 
       const formData = {
-        jenisLaporan: document.getElementById("jenisLaporan").value,
-        pelapor: document.getElementById("pelapor").value,
-        waktuKejadian: waktuGabungan,
-        lokasiKejadian: document.getElementById("lokasiKejadian").value,
-        deskripsi: document.getElementById("deskripsi").value,
-        nama: document.getElementById("nama").value,
-        kontak: document.getElementById("kontak").value
-        // file tidak dikirim
-      };
+      jenisLaporan: document.getElementById("jenisLaporan").value,
+      pelapor: document.getElementById("pelapor").value,
+      waktuKejadian: `${document.getElementById("tanggal-kejadian").value} ${document.getElementById("waktu-kejadian").value}`,
+      lokasiKejadian: document.getElementById("lokasiKejadian").value,
+      deskripsi: document.getElementById("deskripsi").value,
+      nama: document.getElementById("nama").value,
+      kontak: document.getElementById("kontak").value,
+    };
 
-      fetch("https://script.google.com/macros/s/AKfycbz-rJswYHzyVYeh_4dJ9mS2FkZdFW3eGWE0Sb6vWjA/dev", {
+      fetch("https://script.google.com/macros/s/AKfycbzL9PKhv1Gw0Yhd6RYpnsfx-fJ1_54dccxaVuwpF4OtZ9-DbzEsWgmv0Q-lsavNaVz9/exec", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {

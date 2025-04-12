@@ -64,10 +64,10 @@
         <option value="Korban">Korban</option>
       </select>
 
-      <label for="tanggalKejadian">Tanggal Kejadian</label>
+      <label for="tanggalKejadian">Tanggal Kejadian (Opsional)</label>
       <input type="date" id="tanggalKejadian" name="tanggalKejadian">
 
-      <label for="jamKejadian">Jam Kejadian</label>
+      <label for="jamKejadian">Jam Kejadian (Opsional)</label>
       <input type="time" id="jamKejadian" name="jamKejadian">
 
       <label for="lokasiKejadian">Lokasi Kejadian</label>
@@ -87,6 +87,7 @@
       <input type="file" id="bukti" name="bukti" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.mp3,.mp4,.ppt,.pptx" multiple>
 
       <p><strong>Kontak Pelapor (Opsional)</strong></p>
+
       <label for="nama">Nama</label>
       <input type="text" id="nama" name="nama" placeholder="Nama Anda">
 
@@ -101,10 +102,7 @@
     document.getElementById("laporanForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      // Gabungkan tanggal & jam menjadi satu string waktu kejadian
-      const tanggal = document.getElementById("tanggalKejadian").value;
-      const jam = document.getElementById("jamKejadian").value;
-      const waktuKejadian = tanggal && jam ? `${tanggal} ${jam}` : "";
+      const waktuKejadian = document.getElementById("tanggalKejadian").value + " " + document.getElementById("jamKejadian").value;
 
       const formData = {
         jenisLaporan: document.getElementById("jenisLaporan").value,
@@ -112,8 +110,9 @@
         waktuKejadian: waktuKejadian,
         lokasiKejadian: document.getElementById("lokasiKejadian").value,
         deskripsi: document.getElementById("deskripsi").value,
-        kontak: document.getElementById("kontak").value,
         nama: document.getElementById("nama").value,
+        kontak: document.getElementById("kontak").value
+        // file tidak dikirim lewat fetch biasa
       };
 
       fetch("https://script.google.com/macros/s/AKfycbz-rJswYHzyVYeh_4dJ9mS2FkZdFW3eGWE0Sb6vWjA/dev", {

@@ -81,7 +81,7 @@
       </select>
 
       <label for="deskripsi">Deskripsi Tambahan</label>
-      <textarea id="deskripsi" name="deskripsi" rows="5" placeholder="Jelaskan secara rinci alur dari kasus yang Anda laporkan" required></textarea>
+      <textarea id="deskripsi" name="deskripsi" rows="5" required placeholder="Jelaskan secara rinci alur dari kasus yang Anda laporkan"></textarea>
 
       <label for="bukti">Upload Bukti Pendukung</label>
       <input type="file" id="bukti" name="bukti" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.mp3,.mp4,.ppt,.pptx" multiple>
@@ -102,17 +102,17 @@
     document.getElementById("laporanForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      const waktuKejadian = document.getElementById("tanggalKejadian").value + " " + document.getElementById("jamKejadian").value;
+      const waktuGabungan = document.getElementById("tanggalKejadian").value + " " + document.getElementById("jamKejadian").value;
 
       const formData = {
         jenisLaporan: document.getElementById("jenisLaporan").value,
         pelapor: document.getElementById("pelapor").value,
-        waktuKejadian: waktuKejadian,
+        waktuKejadian: waktuGabungan,
         lokasiKejadian: document.getElementById("lokasiKejadian").value,
         deskripsi: document.getElementById("deskripsi").value,
         nama: document.getElementById("nama").value,
         kontak: document.getElementById("kontak").value
-        // file tidak dikirim lewat fetch biasa
+        // file tidak dikirim
       };
 
       fetch("https://script.google.com/macros/s/AKfycbz-rJswYHzyVYeh_4dJ9mS2FkZdFW3eGWE0Sb6vWjA/dev", {
